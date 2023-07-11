@@ -1,0 +1,13 @@
+#!/bin/bash
+# Start the backup process every three minutes
+while true; do
+  # Create a backup archive with the current date and time
+  backup_filename="backup_$(date +%Y-%m-%d-%H-%M-%S).tar"
+  tar --exclude=backup -cf "$backup_filename" .
+
+  # Remove backups older than 2 days
+  find backup/ -type f -mtime +2 -exec rm {} \;
+
+  # Sleep for 3 minutes (180 seconds)
+  sleep 180
+done
